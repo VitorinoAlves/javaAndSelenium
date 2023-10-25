@@ -25,12 +25,61 @@ public class CadastroBurgerEats {
     private final By fotoCnhField = By.xpath("//div[@class='dropzone']/input");
     private final By cadastroButton = By.xpath("//button[@type='submit']");
 
+    //Mensagens
+    private final By cpfInvalidoAlert = By.xpath("//input[@name='cpf']/../span");
+    private final By fotoCnhObrigatoriaAlert = By.xpath("//div[@class='dropzone']/../span");
+    private final By mensagenDeSucesso = By.xpath("//div[@id='swal2-html-container']");
+
     public void inputCompleteName(String name){
         driver.findElement(nomeCompletoField).sendKeys(name);
     }
 
     public void inputCpf(String cpf){
         driver.findElement(cpfField).sendKeys(cpf);
+    }
+
+    public void inputEmail(String email){
+        driver.findElement(emailField).sendKeys(email);
+    }
+
+    public void inputWhatsapp(String whatsapp){
+        driver.findElement(whatsappField).sendKeys(whatsapp);
+    }
+
+    public void inputCep(String cep){
+        driver.findElement(cepField).sendKeys(cep);
+    }
+
+    public void inputNumeroEndereco(String numeroEndereco){
+        driver.findElement(numeroField).sendKeys(numeroEndereco);
+    }
+
+    public void inputComplemento(String complemento){
+        driver.findElement(complementoField).sendKeys(complemento);
+    }
+
+    public void clickBuscarCepButton(){
+        driver.findElement(buscarCepButton).click();
+    }
+
+    public void selecionaOpcaoMoto(){
+        driver.findElement(motoButton).click();
+    }
+
+    public void clickSubmitButton(){
+        driver.findElement(cadastroButton).click();
+    }
+
+    public String getcpfInvalidoAlert(){
+        return driver.findElement(cpfInvalidoAlert).getText();
+    }
+
+    public String getCnhObrigatoriaAlert(){
+        return driver.findElement(fotoCnhObrigatoriaAlert).getText();
+    }
+
+    public String getMensagemDeSucesso(){
+        return driver.findElement(mensagenDeSucesso).getText();
     }
 
 }
