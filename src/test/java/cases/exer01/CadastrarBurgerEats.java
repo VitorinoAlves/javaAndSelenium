@@ -1,44 +1,24 @@
 package cases.exer01;
 
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.chrome.ChromeDriver;
 import pages.CadastroBurgerEats;
 import pages.HomeBugerEats;
 import org.openqa.selenium.By;
-import pages.LoginAdmin;
+import utils.Driver;
 
 import java.io.File;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.time.Duration;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public class CadastrarBurgerEats {
-
-    WebDriver driver;
-
-    @BeforeEach
-    public void setUp(){
-        driver = new ChromeDriver();
-        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(5));
-        driver.get("https://buger-eats.vercel.app/");
-    }
-
-    @AfterEach
-    public void tearDown(){
-        //driver.close();
-        driver.quit();
-    }
-
+public class CadastrarBurgerEats extends Driver {
     /*Efetue uma tentativa de cadastro informando
     um CPF inválido e deixando de enviar a foto da CNH e valide que mensagens informando
     da necessidade de corrigir os campos são exibidas.*/
     @Test
     public void cadastroInvalido(){
+        driver.get("https://buger-eats.vercel.app/");
         HomeBugerEats homeBugerEats = new HomeBugerEats(driver);
         CadastroBurgerEats cadastroBurgerEats = new CadastroBurgerEats(driver);
 
@@ -61,6 +41,7 @@ public class CadastrarBurgerEats {
     Valide que o cadastro foi concluído com sucesso.*/
     @Test
     public void cadastroValido(){
+        driver.get("https://buger-eats.vercel.app/");
         HomeBugerEats homeBugerEats = new HomeBugerEats(driver);
         CadastroBurgerEats cadastroBurgerEats = new CadastroBurgerEats(driver);
         Path path = Paths.get("src/test/resources/test.png");
