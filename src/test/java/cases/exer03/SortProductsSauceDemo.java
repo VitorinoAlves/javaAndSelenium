@@ -5,6 +5,7 @@ import pages.SwagLabCart;
 import pages.SwagLabCheckout;
 import pages.SwagLabHome;
 import pages.SwagLabLogin;
+import utils.DataGenerator;
 import utils.Driver;
 
 import java.util.Collections;
@@ -63,11 +64,12 @@ public class SortProductsSauceDemo extends Driver {
         SwagLabHome swagLabHome = new SwagLabHome(driver);
         SwagLabCart swagLabCart = new SwagLabCart(driver);
         SwagLabCheckout swagLabCheckout = new SwagLabCheckout(driver);
+        DataGenerator dataGenerator = new DataGenerator();
+        double totalPriceExpected = 0;
 
         driver.get("https://www.saucedemo.com/");
         swagLabLogin.login("standard_user","secret_sauce");
 
-        List<String> productNamesFromHome = swagLabHome.getListOfProducts();
         List<String> productPricesFromHome = swagLabHome.getListPriceOfProducts();
         swagLabHome.clickOnAddToCartByIndex(0);
         swagLabHome.clickOnAddToCartByIndex(1);
@@ -80,10 +82,12 @@ public class SortProductsSauceDemo extends Driver {
         swagLabCheckout.inputLastName("LastName");
         swagLabCheckout.inputZipCode("85214");
         swagLabCheckout.clickContinueButton();
-        String totalPrice = swagLabCheckout.getTotalPrice();
+        double totalPrice = dataGenerator.getValue(swagLabCheckout.getTotalPrice());
 
-        System.out.println("");
+        for (int i=0; i<3; i++){
+            totalPriceExpected = totalPriceExpected + dataGenerator.getValue(productPricesFromHome.get(i));
+        }
 
-
+        assertEquals(totalPrice, totalPriceExpected);
     }
 }
