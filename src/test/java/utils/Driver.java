@@ -26,7 +26,13 @@ public class Driver {
     @AfterEach
     public void tearDown(){
         //close() is a webdriver command that closes the browser window currently in focus.
-        driver.close();
+        //driver.close();
+
+        for(String handle : driver.getWindowHandles()) {
+            driver.switchTo().window(handle);
+            driver.close();
+        }
+
         //quit() is a webdriver command which calls the driver.dispose method, which in turn closes all the browser windows and terminates the WebDriver session.
         //driver.quit();
     }

@@ -1,5 +1,8 @@
 package utils;
 
+import org.openqa.selenium.WebDriver;
+
+import java.util.ArrayList;
 import java.util.Random;
 
 public class DataGenerator {
@@ -15,5 +18,10 @@ public class DataGenerator {
 
         // Convert the extracted string to a double
         return Double.parseDouble(numericString);
+    }
+
+    public void switchTab(int tabIndex, WebDriver driver){
+        ArrayList<String> tabs = new ArrayList<String> (driver.getWindowHandles());
+        driver.switchTo().window(tabs.get(tabIndex));
     }
 }
