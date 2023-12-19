@@ -31,34 +31,18 @@ public class DemoBookStore extends Driver {
     @MethodSource("provideCredentialsAndBooks")
     public void addBookToList(String username, String password, String bookTitle){
         driver.get("https://demoqa.com/books");
-        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(15));
-        JavascriptExecutor executor = (JavascriptExecutor)driver;
-
         DemoQa demoQa = new DemoQa(driver);
-
-        By addToYourCollectionButton = By.xpath("//button[text()='Add To Your Collection']");
-        By profileMenuOption = By.xpath("//span[text()='Profile']/..");
-        By deleteIcon = By.xpath("//span[@id='delete-record-undefined']");
-        By confirmDeleteActionButton = By.xpath("//button[@id='closeSmallModal-ok']");
 
         demoQa.performLoginAction(username, password);
         assertEquals(username, demoQa.getUserNameHome());
 
-        driver.findElement(By.xpath("//a[text()='"+bookTitle+"']")).click();
-        executor.executeScript("arguments[0].click();", driver.findElement(addToYourCollectionButton));
+        demoQa.addBookToColection(bookTitle);
+        assertEquals("Book added to your collection.", demoQa.getAlertTextAndAccept());
 
-        wait.until(ExpectedConditions.alertIsPresent());
-        Alert alert = driver.switchTo().alert();
-        String alertMessage = driver.switchTo().alert().getText();
-        assertEquals("Book added to your collection.", alertMessage);
-        alert.accept();
 
-        executor.executeScript("arguments[0].click();", driver.findElement(profileMenuOption));
-
-        String listedBook = driver.findElement(By.xpath("//span[@id='see-book-"+bookTitle+"']/a")).getText();
-        assertEquals(bookTitle, listedBook);
-        executor.executeScript("arguments[0].click();", driver.findElement(deleteIcon));
-        executor.executeScript("arguments[0].click();", driver.findElement(confirmDeleteActionButton));
+        demoQa.clickProfileMenuOption();
+        assertEquals(bookTitle, demoQa.getBookNameCollection(bookTitle));
+        demoQa.cleanAddedBooks();
 
     }
 }
