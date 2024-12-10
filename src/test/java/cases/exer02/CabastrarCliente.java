@@ -11,12 +11,13 @@ import pages.BugBankExtrato;
 import pages.BugBankHome;
 import pages.BugBankLogin;
 import utils.DataGenerator;
+import utils.Driver;
 
 import java.time.Duration;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public class CabastrarCliente{
+public class CabastrarCliente {
     public static WebDriver driver;
     static DataGenerator dataGenerator = new DataGenerator();
     static String email;
